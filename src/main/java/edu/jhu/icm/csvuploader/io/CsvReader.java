@@ -6,6 +6,8 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Reads CSVs.
@@ -13,11 +15,19 @@ import java.io.Reader;
  */
 public class CsvReader {
 
+    private List<String> headers;
+
     public CsvReader(String filename) throws IOException {
 
+        headers = new ArrayList<>();
+
         Reader in = new FileReader(filename);
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
-        for (CSVRecord record : records) {
-        }
+        Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
+
+
+    }
+
+    public List<String> getHeaders() {
+        return headers;
     }
 }

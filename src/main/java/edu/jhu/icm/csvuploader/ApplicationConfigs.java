@@ -19,7 +19,7 @@ public class ApplicationConfigs {
     @Bean
     public org.apache.commons.configuration2.Configuration configurationFile() throws ConfigurationException {
         Configurations configurations = new Configurations();
-        return configurations.ini(new File("/etc/csvuploader.conf"));
+        return configurations.ini(new File("csvuploader.conf"));
     }
 
 }
