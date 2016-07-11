@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,9 +23,18 @@ public class CsvReader {
         headers = new ArrayList<>();
 
         Reader in = new FileReader(filename);
-        Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
+        Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
+        Iterator<CSVRecord> i = records.iterator();
+        CSVRecord r = i.next();
 
+        for (String s : r) {
+            headers.add(s.trim());
+        }
 
+        while (i.hasNext()) {
+            CSVRecord current = i.next();
+            System.out.println(current);
+        }
     }
 
     public List<String> getHeaders() {

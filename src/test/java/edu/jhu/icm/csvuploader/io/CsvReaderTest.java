@@ -14,6 +14,10 @@ public class CsvReaderTest {
     public void testCsvReader() {
         try {
             CsvReader csvReader = new CsvReader("data/STUDY_00001.2224BN1416911131.RFP.csv");
+            for (String s : csvReader.getHeaders()) {
+                System.out.println(s);
+            }
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
