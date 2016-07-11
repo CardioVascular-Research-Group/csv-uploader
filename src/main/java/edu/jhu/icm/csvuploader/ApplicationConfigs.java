@@ -1,5 +1,6 @@
 package edu.jhu.icm.csvuploader;
 
+import com.google.gson.Gson;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,11 @@ public class ApplicationConfigs {
     @Bean
     public String tsdbRoot(org.apache.commons.configuration2.Configuration configurationFile) { // Chaining dependency.
         return configurationFile.getString("tsdb-root");
+    }
+
+    @Bean
+    public Gson gson() {
+        return new Gson();
     }
 
 }

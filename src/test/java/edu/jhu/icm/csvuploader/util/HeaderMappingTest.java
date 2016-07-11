@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
  * Created by rliu14 on 7/11/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfigurations.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {TestConfigurations.class, HeaderMapping.class})
 public class HeaderMappingTest {
 
     @Autowired

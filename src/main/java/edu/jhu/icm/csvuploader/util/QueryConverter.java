@@ -1,15 +1,16 @@
 package edu.jhu.icm.csvuploader.util;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Converts CSV records into queries.
@@ -25,18 +26,27 @@ public class QueryConverter {
         this.dateFormat = new SimpleDateFormat(dateFormat);
     }
 
-    public List<JsonObject> convert(List<String> headers, List<CSVRecord> records) {
-        Map<String, List<Query>> queries; // Map between metrics and list of queries.
-        List<JsonObject> result = new ArrayList<>();
+    public JsonArray convert(List<String> headers, List<CSVRecord> records, String subjectId) throws ParseException {
+        JsonArray result = new JsonArray();
+
+        JsonObject tags = new JsonObject();
+        tags.addProperty("subject_id", subjectId);
 
         for (CSVRecord r : records) {
+            Date date = dateFormat.parse(r.get(0));
 
+            for (int c = 1; c < r.size(); c++) {
+                if (r.get(c).trim().length() > 0) {
+                    JsonObject query = new JsonObject();
+                    query.addProperty("metric", headers.get(c));
+                    query.addProperty("timestamp", date.getTime());
+                    query.addProperty("value", Double.parseDouble(r.get(c).trim()));
+                    query.add("tags", tags);
+                    result.add(query);
+                }
+            }
         }
 
         return result;
-    }
-
-    private static class Query {
-
     }
 }
