@@ -15,7 +15,7 @@ public class CsvReaderTest {
     @Test
     public void testCsvReader() {
         try {
-            CsvReader csvReader = new CsvReader("data/STUDY_00001.2224BN1416911131.RFP.csv");
+            CsvReader csvReader = new CsvReader("test/STUDY_00001.2224BN1416911131.RFP.csv");
 
             assertEquals(23, csvReader.getHeaders().size());
             assertEquals("Date", csvReader.getHeaders().get(0));
