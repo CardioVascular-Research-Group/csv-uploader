@@ -1,6 +1,5 @@
 package edu.jhu.icm.csvuploader.io;
 
-import edu.jhu.icm.csvuploader.util.CsvEntry;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -18,7 +17,7 @@ import java.util.List;
 public class CsvReader {
 
     private List<String> headers;
-    private List<CsvEntry> entries;
+    private List<CSVRecord> entries;
 
     public CsvReader(String filename) throws IOException {
 
@@ -33,9 +32,8 @@ public class CsvReader {
         for (String s : r) {
             headers.add(s.trim());
         }
-
         while (i.hasNext()) {
-            entries.add(new CsvEntry(headers, i.next()));
+            entries.add(i.next());
         }
     }
 
@@ -43,7 +41,7 @@ public class CsvReader {
         return headers;
     }
 
-    public List<CsvEntry> getEntries() {
+    public List<CSVRecord> getEntries() {
         return entries;
     }
 }

@@ -76,7 +76,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <finalName>wvtools</finalName>
+                    <finalName>csvuploader</finalName>
                 </configuration>
             </plugin>
             <plugin>

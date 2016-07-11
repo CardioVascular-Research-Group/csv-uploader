@@ -13,13 +13,18 @@ import java.io.File;
  * Created by rliu14 on 7/8/16.
  */
 @Configuration
-@ComponentScan(basePackages = "edu.jhu.icm.csvuploader.util")
+@ComponentScan(basePackages = "edu.jhu.icm.csvuploader")
 public class ApplicationConfigs {
 
     @Bean
     public org.apache.commons.configuration2.Configuration configurationFile() throws ConfigurationException {
         Configurations configurations = new Configurations();
         return configurations.ini(new File("csvuploader.conf"));
+    }
+
+    @Bean
+    public String tsdbRoot(org.apache.commons.configuration2.Configuration configurationFile) { // Chaining dependency.
+        return configurationFile.getString("tsdb-root");
     }
 
 }

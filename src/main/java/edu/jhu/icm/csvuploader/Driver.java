@@ -19,6 +19,11 @@ public class Driver {
         options.addOption("f", "filename", true, "File to read");
     }
 
+    private static void printHelp() {
+        HelpFormatter helpFormatter = new HelpFormatter();
+        helpFormatter.printHelp("java -jar csvuploader.jar", options);
+    }
+
     public static void main(String[] args) {
 
         registerOptions();
@@ -27,11 +32,17 @@ public class Driver {
 
         try {
             CommandLine cmd = parser.parse(options, args);
-            String filename = cmd.getOptionValue("filename");
 
-            ApplicationContext context =  new AnnotationConfigApplicationContext(ApplicationConfigs.class);
-            CsvUploaderFacade facade = (CsvUploaderFacade)context.getBean("csvUploaderFacade");
+            if (cmd.hasOption("filename")) {
+                String filename = cmd.getOptionValue("filename");
 
+                ApplicationContext context =  new AnnotationConfigApplicationContext(ApplicationConfigs.class);
+                CsvUploaderFacade facade = (CsvUploaderFacade)context.getBean("csvUploaderFacade");
+
+                facade.uploadFile(filename);
+            } else {
+                printHelp();
+            }
 
         } catch (ParseException e) {
             System.err.println(e.getMessage());

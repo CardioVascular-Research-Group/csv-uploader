@@ -1,8 +1,6 @@
 package edu.jhu.icm.csvuploader;
 
 
-import org.apache.commons.configuration2.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,9 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CsvUploaderFacade {
 
-    @Autowired
-    private Configuration configurationFile;
-
     public CsvUploaderFacade() {
 
     }
@@ -23,7 +18,4 @@ public class CsvUploaderFacade {
 
     }
 
-    public void setConfigurations(Configuration configurationFile) {
-        this.configurationFile = configurationFile;
-    }
 }
