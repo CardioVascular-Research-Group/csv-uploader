@@ -17,6 +17,15 @@ import java.io.File;
 public class ApplicationConfigs {
 
     @Bean
+    public String version() {
+        return "v1.0, updated 7/11/2016";
+    }
+
+    public String dateFormat() {
+        return "yyyy-MM-dd HH:mm";
+    }
+
+    @Bean
     public org.apache.commons.configuration2.Configuration configurationFile() throws ConfigurationException {
         Configurations configurations = new Configurations();
         return configurations.ini(new File("csvuploader.conf"));

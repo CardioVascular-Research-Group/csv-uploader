@@ -4,6 +4,8 @@ import org.apache.commons.cli.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.IOException;
+
 /**
  * Application to upload CSV files into OpenTSDB.
  * Created by rliu14 on 7/8/16.
@@ -16,7 +18,14 @@ public class Driver {
      * Registers command line interface options.
      */
     private static void registerOptions() {
-        options.addOption("f", "filename", true, "File to read");
+        Option version = new Option("v", "version", false, "Displays version information");
+
+        Option filename = new Option("f", "filename", true, "File to read");
+        Option subjectId = new Option("r", "subject-id", true, "Subject id");
+
+        options.addOption(version);
+        options.addOption(filename);
+        options.addOption(subjectId);
     }
 
     private static void printHelp() {
@@ -32,19 +41,25 @@ public class Driver {
 
         try {
             CommandLine cmd = parser.parse(options, args);
+            ApplicationContext context =  new AnnotationConfigApplicationContext(ApplicationConfigs.class);
 
-            if (cmd.hasOption("filename")) {
+            if (cmd.hasOption("version")) {
+                String versionInfo = (String)context.getBean("version");
+                System.out.println(versionInfo);
+
+            } else if (cmd.hasOption("filename")) {
                 String filename = cmd.getOptionValue("filename");
+                String subjectId = filename;
+                if (cmd.hasOption("subject-id")) subjectId = cmd.getOptionValue("subject-id");
 
-                ApplicationContext context =  new AnnotationConfigApplicationContext(ApplicationConfigs.class);
                 CsvUploaderFacade facade = (CsvUploaderFacade)context.getBean("csvUploaderFacade");
+                facade.uploadFile(filename, subjectId);
 
-                facade.uploadFile(filename);
             } else {
                 printHelp();
             }
 
-        } catch (ParseException e) {
+        } catch (ParseException | IOException e) {
             System.err.println(e.getMessage());
         }
 

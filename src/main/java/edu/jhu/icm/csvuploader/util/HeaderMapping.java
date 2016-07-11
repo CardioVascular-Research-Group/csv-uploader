@@ -4,7 +4,9 @@ import org.apache.commons.configuration2.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +43,16 @@ public class HeaderMapping {
     public String map(String header) {
         if (metricMap.containsKey(header)) return metricMap.get(header);
         return header;
+    }
+
+    public List<String> convert(List<String> headers) {
+        List<String> result = new ArrayList<>();
+
+        for (String s : headers) {
+            result.add(map(s));
+        }
+
+        return result;
     }
 
 }
