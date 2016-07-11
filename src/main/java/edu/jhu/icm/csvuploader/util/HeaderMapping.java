@@ -21,14 +21,13 @@ public class HeaderMapping {
     @Autowired
     public HeaderMapping(Configuration configurationFile) {
         metricMap = new HashMap<>();
-
-        if (configurationFile.containsKey("mappings"));
-        String[] mappings = configurationFile.getString("mappings").split(",");
-        for (String s : mappings) {
-            String[] pairs = s.split("=");
-            metricMap.put(pairs[0], pairs[1]);
+        if (configurationFile.containsKey("mappings")) {
+            String[] mappings = configurationFile.getString("mappings").split(",");
+            for (String s : mappings) {
+                String[] pairs = s.split("=");
+                metricMap.put(pairs[0], pairs[1]);
+            }
         }
-
     }
 
     public HeaderMapping(Map<String, String> metricMap) {
