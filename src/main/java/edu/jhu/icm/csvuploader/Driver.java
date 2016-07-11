@@ -59,7 +59,7 @@ public class Driver {
                 printHelp();
             }
 
-        } catch (ParseException | IOException e) {
+        } catch (ParseException | IOException | java.text.ParseException e) {
             System.err.println(e.getMessage());
         }
 
