@@ -36,11 +36,12 @@ public class QueryConverter {
             Date date = dateFormat.parse(r.get(0));
 
             for (int c = 1; c < r.size(); c++) {
-                if (r.get(c).trim().length() > 0) {
+                String trimmedEntry = r.get(c).trim();
+                if (trimmedEntry.length() > 0 && !trimmedEntry.equals("-999.9") && !trimmedEntry.equals("-888.8")) {
                     JsonObject query = new JsonObject();
                     query.addProperty("metric", headers.get(c));
                     query.addProperty("timestamp", date.getTime());
-                    query.addProperty("value", Double.parseDouble(r.get(c).trim()));
+                    query.addProperty("value", Double.parseDouble(trimmedEntry));
                     query.add("tags", tags);
                     result.add(query);
                 }

@@ -22,6 +22,7 @@ public class ApplicationConfigs {
         return "v1.0, updated 7/11/2016";
     }
 
+    @Bean
     public String dateFormat() {
         return "yyyy-MM-dd HH:mm";
     }
